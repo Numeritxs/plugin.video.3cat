@@ -371,21 +371,18 @@ class TV3cat(object):
 
         return lVideos
     
-#https://www.3cat.cat/3cat/cercador/?cerca=la+travessa
     def listProgramesNom(self, titolPrograma):
             xbmc.log("plugin.video.3cat - programes per nom " + str(titolPrograma))
             lFolderVideos = []
             programaId = self.getProgramaId(titolPrograma)
-            xbmc.log("plugin.video.3cat - programaId " + str(programaId))
             programes = self.getProgramaData(programaId)
-            xbmc.log("plugin.video.3cat - programes " + str(programes))
             for programa in programes:
                  if titolPrograma == programa['programes_tv'][0]['nom_bonic']:
                     xbmc.log("plugin.video.3cat - Found programa " + str(titolPrograma))
                     titol = programa['programes_tv'][0]['titol']
                     nombonic = programa['programes_tv'][0]['nom_bonic']
-                    #img = self.extractImageIfAvailable(programa, "IMG_POSTER")
-                    foldVideo = FolderVideo(titol, nombonic, 'getTemporades')#, img, img)
+                    img = self.extractImageIfAvailable(programa['programes_tv'][0], "IMG_POSTER")
+                    foldVideo = FolderVideo(titol, nombonic, 'getTemporades', img, img)
                     lFolderVideos.append(foldVideo)
 
                     return lFolderVideos
