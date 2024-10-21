@@ -17,18 +17,15 @@ def find_key_by_value(json_data, target_key):
 def getHtml(url):
     try:
 
-        req = urllib.request.Request(url)
+        req = urllib.request.Request(url + "/")
         response = urllib.request.urlopen(req)
         link = response.read()
         response.close()
-
-
         return link
-
+    
     except urllib.error.URLError as e:
         xbmc.log("getHtml error - " + str(e))
         xbmc.log("getHtml url - " + url)
-
         return None
 
 
