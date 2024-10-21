@@ -42,7 +42,7 @@ class TV3cat(object):
             if script_tag:
                 xbmc.log("plugin.video.3cat - found script")
 
-                # Find all items with 'titol' and 'id'
+                # Find all items with 'nombonic' and 'id'
                 # Extract the JSON content from the script tag
                 json_content = script_tag.string
                 # print(json_content)
@@ -287,7 +287,6 @@ class TV3cat(object):
 
         return lVideos
 
-
     def getVideo(self, data):
         linkvideo = None
         media = data.get('media', {})
@@ -361,14 +360,35 @@ class TV3cat(object):
 
     #mode = cercar
     def search(self):
-
+        xbmc.log("plugin.video.3cat - cercar")
         keyboard = xbmc.Keyboard('', self.strs.get('cercar'))
         keyboard.doModal()
         if keyboard.isConfirmed() and keyboard.getText():
             search_string = keyboard.getText().replace(" ", "+")
-            url = "http://www.ccma.cat/tv3/alacarta/cercador/?items_pagina=15&profile=videos&text=" + search_string
-
-            lVideos = self.getListVideos(url, True)
+            url = "https://www.3cat.cat/3cat/cercador/?cerca=" + search_string
+            titolPrograma = url.split('=')[1].replace("+", "-")
+            lVideos = self.listProgramesNom(titolPrograma)
 
         return lVideos
+    
+#https://www.3cat.cat/3cat/cercador/?cerca=la+travessa
+    def listProgramesNom(self, titolPrograma):
+            xbmc.log("plugin.video.3cat - programes per nom " + str(titolPrograma))
+            lFolderVideos = []
+            programaId = self.getProgramaId(titolPrograma)
+            xbmc.log("plugin.video.3cat - programaId " + str(programaId))
+            programes = self.getProgramaData(programaId)
+            xbmc.log("plugin.video.3cat - programes " + str(programes))
+            for programa in programes:
+                 if titolPrograma == programa['programes_tv'][0]['nom_bonic']:
+                    xbmc.log("plugin.video.3cat - Found programa " + str(titolPrograma))
+                    titol = programa['programes_tv'][0]['titol']
+                    nombonic = programa['programes_tv'][0]['nom_bonic']
+                    #img = self.extractImageIfAvailable(programa, "IMG_POSTER")
+                    foldVideo = FolderVideo(titol, nombonic, 'getTemporades')#, img, img)
+                    lFolderVideos.append(foldVideo)
+
+                    return lFolderVideos
+
+            return lFolderVideos
 

@@ -72,12 +72,12 @@ class UI(object):
 
         elif mode[0] == 'cercar':
 
-            lVideos = self.tv3.search()
+            lFolder = self.tv3.search()
 
-            if len(lVideos) > 0:
-                self.listVideos(lVideos)
+            if len(lFolder) > 0:
+                self.listFolder(lFolder)
             else:
-                xbmc.log("plugin.video.3cat - UI.run() cercar - No s'ha trobat cap video")
+                xbmc.log("plugin.video.3cat - UI.run() cercar - No s'ha trobat cap programa")
 
 
         elif mode[0] == 'getlistvideos':

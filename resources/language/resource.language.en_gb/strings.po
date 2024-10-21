@@ -102,7 +102,7 @@ msgstr "Esport 3"
 
 msgctxt "#30022"
 msgid "Search"
-msgstr "Search"
+msgstr "Exact search"
 
 msgctxt "#30023"
 msgid "Collections"

@@ -11,6 +11,6 @@ def getList(strings):
     coleccions = FolderVideo(strings.get('coleccions'), "", "coleccions", "", "")
     #programes = FolderVideo(strings.get('programes'), "", "programes", "", "")
     #directe = FolderVideo(strings.get('directe'), "", "directe", "", "")
-    #cercar = FolderVideo(strings.get('cercar'), "", "cercar", "", "")
+    cercar = FolderVideo(strings.get('cercar'), "", "cercar", "", "")
 
-    return [coleccions]
+    return [coleccions, cercar]
