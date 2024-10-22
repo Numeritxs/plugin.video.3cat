@@ -199,7 +199,6 @@ class TV3cat(object):
 
         return lVideos
 
-<<<<<<< HEAD
     def getVideo(self, data):
         linkvideo = None
         media = data.get('media', {})
@@ -271,8 +270,6 @@ class TV3cat(object):
         else:
             return None
 
-=======
->>>>>>> b61338052579a171752565819369c4aa00a05a7d
     #mode = cercar
     def search(self):
         xbmc.log("plugin.video.3cat - cercar")
