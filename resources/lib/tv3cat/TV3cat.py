@@ -42,7 +42,7 @@ class TV3cat(object):
             if script_tag:
                 xbmc.log("plugin.video.3cat - found script")
 
-                # Find all items with 'nombonic' and 'id'
+                # Find all items with 'titol' and 'id'
                 # Extract the JSON content from the script tag
                 json_content = script_tag.string
                 # print(json_content)
@@ -112,104 +112,16 @@ class TV3cat(object):
 
     # mode = directe
     def listDirecte(self):
-        xbmc.log("-----------------listDirecte--------------------")
-        lVideos = []
+        xbmc.log("plugin.video.3cat listDirecte")
 
-        data = getDataVideo(Urls.url_arafem)
+        tv3Directe = Video(self.strs.get('tv3'), self.images.thumb_tv3, self.images.thumb_tv3, "TV3", Urls.url_directe_tv3, "")
+        c324Directe = Video(self.strs.get('canal324'), self.images.thumb_324, self.images.thumb_324, "324", Urls.url_directe_324, "")
+        sx3Directe = Video(self.strs.get('sx3'), self.images.thumb_sx3, self.images.thumb_sx3, "SX3", Urls.url_directe_sx3, "")
+        sps3Directe = Video(self.strs.get('esport3'), self.images.thumb_esp3, self.images.thumb_esp3, "E3", Urls.url_directe_esport3, "")
+        c33Directe = Video("C33", self.images.thumb_c33, self.images.thumb_c33, "E3", Urls.url_directe_c33, "")
 
-        if data:
-            c = data.get('canal', None)
+        return [tv3Directe, sx3Directe, c324Directe, sps3Directe, c33Directe]
 
-            if c:
-
-                arafemtv3 = ''
-                arafem33 = ''
-                arafemesp3 = ''
-                arafem324 = ''
-                arafemtv3_sinop = ''
-                arafem33_sinop = ''
-                arafemesp3_sinop = ''
-                arafem324_sinop = ''
-
-                i = 0
-                while i < 5:
-                    nameChannel = c[i].get('ara_fem', {}).get('codi_canal', None)
-
-                    if nameChannel == 'tv3':
-                        arafemtv3 = c[i].get('ara_fem', {}).get('titol_programa', None)
-                        arafemtv3_sinop = c[i].get('ara_fem', {}).get('sinopsi', None)
-                    if nameChannel == 'cs3' or nameChannel == '33d':
-                        arafem33 = c[i].get('ara_fem', {}).get('titol_programa', None)
-                        arafem33_sinop = c[i].get('ara_fem', {}).get('sinopsi', None)
-                    if nameChannel == 'esport3':
-                        arafemesp3 = c[i].get('ara_fem', {}).get('titol_programa', None)
-                        arafemesp3_sinop = c[i].get('ara_fem', {}).get('sinopsi', None)
-                    if nameChannel == '324':
-                        arafem324 = c[i].get('ara_fem', {}).get('titol_programa', None)
-                        arafem324_sinop = c[i].get('ara_fem', {}).get('sinopsi', None)
-
-                    i = i + 1
-
-            infolabelstv3 = {}
-            infolabels324 = {}
-            infolabels33 = {}
-            infolabelsesp3 = {}
-
-            if arafemtv3:
-                infolabelstv3['title'] = arafemtv3
-                infotv3 = '[B]' + arafemtv3 + '[/B]' + '[CR]'
-            if arafemtv3_sinop:
-                if type(arafemtv3) is int or type(arafemtv3) is float:
-                    arafemtv3 = str(arafemtv3)
-                infotv3 = infotv3 + arafemtv3_sinop
-
-            infolabelstv3['plot'] = infotv3
-
-            if arafem33:
-                infolabels33['title'] = arafem33
-                info33 = '[B]' + arafem33 + '[/B]' + '[CR]'
-            if arafem33_sinop:
-                if type(arafem33) is int or type(arafem33) is float:
-                    arafem33 = str(arafem33)
-                info33 = info33 + arafem33_sinop
-
-            infolabels33['plot'] = info33
-
-            if arafemesp3:
-                infolabelsesp3['title'] = arafemesp3
-                infoesp3 = '[B]' + arafemesp3 + '[/B]' + '[CR]'
-            if arafemesp3_sinop:
-                if type(arafemesp3) is int or type(arafemesp3) is float:
-                    arafemesp3 = str(arafemesp3)
-                infoesp3 = infoesp3 + arafemesp3_sinop
-
-            infolabelsesp3['plot'] = infoesp3
-
-            if arafem324:
-                infolabels324['title'] = arafem324
-                info324 = '[B]' + arafem324 + '[/B]' + '[CR]'
-            if arafem324_sinop:
-                if type(arafem324) is int or type(arafem324) is float:
-                    arafem324 = str(arafem324)
-                info324 = info324 + arafem324_sinop
-
-            infolabels324['plot'] = info324
-
-        tv3Directe = Video(self.strs.get('tv3'), self.images.thumb_tv3, self.images.thumb_tv3, infolabelstv3, Urls.url_directe_tv3, "")
-        c324Directe = Video(self.strs.get('canal324'), self.images.thumb_tv3, self.images.thumb_tv3, infolabels324, Urls.url_directe_324, "")
-        c33s3Directe = Video(self.strs.get('c33super3'), self.images.thumb_tv3, self.images.thumb_tv3, infolabels33, Urls.url_directe_c33s3, "")
-        sps3Directe = Video(self.strs.get('esport3'), self.images.thumb_tv3, self.images.thumb_tv3, infolabelsesp3, Urls.url_directe_esport3, "")
-
-        tv3DirecteInt = Video(self.strs.get('tv3_int'), self.images.thumb_tv3, self.images.thumb_tv3, infolabelstv3, Urls.url_directe_tv3_int, "")
-        c324DirecteInt = Video(self.strs.get('canal324_int'), self.images.thumb_tv3, self.images.thumb_tv3, infolabels324, Urls.url_directe_324_int, "")
-        c33s3DirecteInt = Video(self.strs.get('c33super3_int'), self.images.thumb_tv3, self.images.thumb_tv3, infolabels33, Urls.url_directe_c33s3_int, "")
-        sps3DirecteInt = Video(self.strs.get('esport3_int'), self.images.thumb_tv3, self.images.thumb_tv3, infolabelsesp3, Urls.url_directe_esport3_int, "")
-
-        lVideos = [tv3Directe, c33s3Directe, c324Directe, sps3Directe, tv3DirecteInt, c33s3DirecteInt, c324DirecteInt, sps3DirecteInt]
-
-        result = [None] * 2
-        result[0] = lVideos
-        return result
 
     def getProgramaData(self, programaId):
         apiUrl = ("https://api.3cat.cat/videos?version=2.0&_format=json&items_pagina=1000&capitol=1|&tipus_contingut=PPD&ordre=capitol&idioma=PU_CATALA&programatv_id={}&perfil=pc"
@@ -287,6 +199,7 @@ class TV3cat(object):
 
         return lVideos
 
+<<<<<<< HEAD
     def getVideo(self, data):
         linkvideo = None
         media = data.get('media', {})
@@ -358,6 +271,8 @@ class TV3cat(object):
         else:
             return None
 
+=======
+>>>>>>> b61338052579a171752565819369c4aa00a05a7d
     #mode = cercar
     def search(self):
         xbmc.log("plugin.video.3cat - cercar")
